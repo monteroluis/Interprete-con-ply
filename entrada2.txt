@@ -1,0 +1,6 @@
+numeric a;
+a~3;
+sasto:a<6;gdgdf into{
+write("ganando como siempre");
+a~a+1;
+}
