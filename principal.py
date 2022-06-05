@@ -99,7 +99,7 @@ def procesar_instrucciones(instrucciones, ts) :
         elif isinstance(instr, Sasto):procesar_sasto(instr, ts)
         else : print('Error: instrucción no válida')
 
-f = open("./entrada2.txt", "r")
+f = open("./entrada.txt", "r")
 input = f.read()
 
 instrucciones = g.parse(input)

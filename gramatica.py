@@ -188,7 +188,7 @@ def p_iteof_otherwise_instr(t):
     t[0] = Otherwise(t[3], t[5], t[9])
 
 def p_sasto_instr(t):
-    'sasto_instr     : SASTO  DUPOINT  expresion_comparativa PTCOMA expresion_ INTO LLAVIZQ instrucciones LLAVDER '
+    'sasto_instr     : SASTO  DUPOINT  expresion_comparativa PTCOMA expresion_numerica INTO LLAVIZQ instrucciones LLAVDER '
     t[0] = Sasto(t[3], t[5], t[8])
 
 def p_expresion_binaria(t):
