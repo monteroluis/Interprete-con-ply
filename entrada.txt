@@ -1,3 +1,11 @@
+#sintaxis de do-while funcionando
+numeric a;
+a~2;
+
+realize {
+write("funcionando");
+a~a+1;
+}during a<10 ;
 
 #Se imprime el encabezado
 write("Tablas de" & " multiplicar");

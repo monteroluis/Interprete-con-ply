@@ -1,5 +1,3 @@
 numeric a;
-a~3;
-sasto:a<~6; a~a+1 into{
-write("hola mundo");
-}
+a~2;
+write(a);

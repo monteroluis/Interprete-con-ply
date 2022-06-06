@@ -19,10 +19,6 @@ class OPERACION_COMPARATIVA(Enum):
     MENOR_IGUAL_QUE = 6
 
 
-class OPERACION_LOGICA(Enum):
-    AND = 1
-    OR = 2
-    NOT = 3
 
 class ExpresionNumerica:
     '''
@@ -117,14 +113,21 @@ class ExpresionComparativa(ExpresionCadena):
         self.exp2 = exp2
         self.operador = operador
 
-
-class ExpresionLogica(ExpresionCadena):
+class ExpresionBooleana:
     '''
-        Esta clase representa la expresión lógica (and,or,etc).
-        Esta clase recibe los operandos y el operador
-    '''
+          Esta clase representa una Expresión de tipo Booleano.
+     '''
 
-    def __init__(self, exp1, exp2, operador):
-        self.exp1 = exp1
-        self.exp2 = exp2
-        self.operador = operador
+class ExpresionBool(ExpresionBooleana):
+     '''
+                Esta clase representa una expresión nu.
+     '''
+     def __init__(self, val=False):
+        self.val = val
+
+class ExpresionIdentificador(ExpresionBooleana):
+    '''
+        Esta clase representa un identificador.
+    '''
+    def __init__(self, id=""):
+       self.id = id

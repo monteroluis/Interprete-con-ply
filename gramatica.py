@@ -5,7 +5,12 @@ reservadas = {
     'iteof': 'ITEOF',
     'otherwise': 'OTHERWISE',
     'sasto': 'SASTO',
-    'into':'INTO'
+    'into':'INTO',
+    'realize':'REALIZE',
+    'true':'TRUE',
+    'false':'FALSE',
+    'bool':'BOOl'
+
 }
 
 tokens = [
@@ -22,10 +27,10 @@ tokens = [
              'DIVIDIDO',
              'POTENCIA',
              'CONCAT',
+             'MAYIGU',
+             'MENIGU',
              'MENQUE',
              'MAYQUE',
-              'MAYIGU',
-              'MENIGU',
              'IGUALQUE',
              'NIGUALQUE',
              'DECIMAL',
@@ -33,9 +38,6 @@ tokens = [
              'CADENA',
              'ID',
              'MODULO',
-             'OR',
-             'AND',
-             'NOT',
          ] + list(reservadas.values())
 
 # Tokens
@@ -58,9 +60,6 @@ t_MAYIGU= r'>~'
 t_MENIGU=r'<~'
 t_IGUALQUE = r'~~'
 t_NIGUALQUE = r'!~'
-t_OR = r'or'
-t_AND = r'and'
-t_NOT = r'not'
 t_MODULO = r'%'
 
 def t_DECIMAL(t):
@@ -126,8 +125,8 @@ lexer = lex.lex()
 precedence = (
     ('left', 'CONCAT'),
     ('left', 'MAS', 'MENOS'),
-    ('left', 'POR', 'DIVIDIDO', 'MODULO'),
-    ('left', 'POTENCIA'),
+    ('left', 'POR', 'DIVIDIDO'),
+    ('left', 'POTENCIA', 'MODULO'),
     ('right', 'UMENOS'),
 )
 
@@ -159,9 +158,9 @@ def p_instruccion(t):
                         | during_instr
                         | iteof_instr
                         | iteof_otherwise_instr
-                        | sasto_instr'''
+                        | sasto_instr
+                        | realize_during_instr'''
     t[0] = t[1]
-
 
 def p_instruccion_write(t):
     'write_instr     :  WRITE PARIZQ expresion_cadena PARDER PTCOMA'
@@ -173,17 +172,22 @@ def p_instruccion_definicion(t):
     t[0] = Definicion(t[2])
 
 def p_asignacion_instr(t):
-    'asignacion_instr   :  ID IGUAL expresion_numerica PTCOMA'
+    '''asignacion_instr   :  ID IGUAL expresion_numerica PTCOMA'''
     t[0] = Asignacion(t[1], t[3])
-
 
 def p_during_instr(t):
     'during_instr     : DURING DUPOINT  expresion_comparativa  LLAVIZQ instrucciones LLAVDER'
     t[0] = During(t[3], t[5])
 
+def p_realize_during_instr(t):
+    'realize_during_instr     : REALIZE LLAVIZQ  instrucciones  LLAVDER DURING  expresion_comparativa PTCOMA '
+    t[0] = During(t[6], t[3])
+
+
 def p_iteof_instr(t):
     'iteof_instr  : ITEOF DUPOINT expresion_comparativa  LLAVIZQ instrucciones LLAVDER'
     t[0] = Iteof(t[3], t[5])
+
 
 
 def p_iteof_otherwise_instr(t):
@@ -200,8 +204,7 @@ def p_expresion_binaria(t):
                          | expresion_numerica POR expresion_numerica
                          | expresion_numerica DIVIDIDO expresion_numerica
                          | expresion_numerica MODULO expresion_numerica
-                         | expresion_numerica POTENCIA expresion_numerica
-                        '''
+                         | expresion_numerica POTENCIA expresion_numerica '''
     if t[2] == '+':
         t[0] = ExpresionBinaria(t[1], t[3], OPERACION_ARITMETICA.MAS)
     elif t[2] == '-':
@@ -257,7 +260,7 @@ def p_expresion_comparativa(t):
                              | expresion_numerica IGUALQUE expresion_numerica
                              | expresion_numerica MAYIGU expresion_numerica
                              | expresion_numerica MENIGU expresion_numerica
-                            | expresion_numerica NIGUALQUE expresion_numerica'''
+                             | expresion_numerica NIGUALQUE expresion_numerica'''
     if t[2] == '>':
         t[0] = ExpresionComparativa(t[1], t[3], OPERACION_COMPARATIVA.MAYOR_QUE)
     elif t[2] == '<':
