@@ -24,6 +24,8 @@ tokens = [
              'CONCAT',
              'MENQUE',
              'MAYQUE',
+              'MAYIGU',
+              'MENIGU',
              'IGUALQUE',
              'NIGUALQUE',
              'DECIMAL',
@@ -52,6 +54,8 @@ t_POTENCIA = r'\^'
 t_CONCAT = r'&'
 t_MENQUE = r'<'
 t_MAYQUE = r'>'
+t_MAYIGU= r'>~'
+t_MENIGU=r'<~'
 t_IGUALQUE = r'~~'
 t_NIGUALQUE = r'!~'
 t_OR = r'or'
@@ -87,7 +91,6 @@ def t_CADENA(t):
     r'\".*?\"'
     t.value = t.value[1:-1]  # remuevo las comillas
     return t
-
 
 # Comentario de múltiples líneas ---> <---
 def t_COMENTARIO_MULTILINEA(t):
@@ -251,8 +254,10 @@ def p_expresion_cadena_numerico(t):
 def p_expresion_comparativa(t):
     '''expresion_comparativa : expresion_numerica MAYQUE expresion_numerica
                              | expresion_numerica MENQUE expresion_numerica
-                            | expresion_numerica IGUALQUE expresion_numerica
-                           | expresion_numerica NIGUALQUE expresion_numerica'''
+                             | expresion_numerica IGUALQUE expresion_numerica
+                             | expresion_numerica MAYIGU expresion_numerica
+                             | expresion_numerica MENIGU expresion_numerica
+                            | expresion_numerica NIGUALQUE expresion_numerica'''
     if t[2] == '>':
         t[0] = ExpresionComparativa(t[1], t[3], OPERACION_COMPARATIVA.MAYOR_QUE)
     elif t[2] == '<':
@@ -261,6 +266,10 @@ def p_expresion_comparativa(t):
         t[0] = ExpresionComparativa(t[1], t[3], OPERACION_COMPARATIVA.IGUAL)
     elif t[2] == '!~':
         t[0] = ExpresionComparativa(t[1], t[3], OPERACION_COMPARATIVA.DIFERENTE)
+    elif t[2] == '>~':
+        t[0] = ExpresionComparativa(t[1], t[3], OPERACION_COMPARATIVA.MAYOR_IGUAL_QUE)
+    elif t[2] == '<~':
+        t[0] = ExpresionComparativa(t[1], t[3], OPERACION_COMPARATIVA.MENOR_IGUAL_QUE)
 
 
 def p_error(t):

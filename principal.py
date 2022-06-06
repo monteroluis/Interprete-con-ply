@@ -43,8 +43,10 @@ def procesar_otherwise(instr, ts) :
 
 def procesar_sasto(instr, ts) :
     while  resolver_expresion_comparativa(instr.expcomparativa, ts):
-        ts_local = TS.TablaDeSimbolos(ts.simbolos)
-        procesar_instrucciones(instr.instrucciones, ts_local)
+            val=resolver_expresion_aritmetica(instr.expNumerica, ts)
+            print(val)
+            ts_local = TS.TablaDeSimbolos(ts.simbolos)
+            procesar_instrucciones(instr.instrucciones, ts_local)
 
 def resolver_cadena(expCad, ts) :
     if isinstance(expCad, ExpresionConcatenar) :
@@ -67,6 +69,8 @@ def resolver_expresion_comparativa(expLog, ts) :
     if expLog.operador == OPERACION_COMPARATIVA.MENOR_QUE : return exp1 < exp2
     if expLog.operador == OPERACION_COMPARATIVA.IGUAL : return exp1 == exp2
     if expLog.operador == OPERACION_COMPARATIVA.DIFERENTE : return exp1 != exp2
+    if expLog.operador == OPERACION_COMPARATIVA.MAYOR_IGUAL_QUE: return exp1 >= exp2
+    if expLog.operador == OPERACION_COMPARATIVA.MENOR_IGUAL_QUE: return exp1 <= exp2
 
 def resolver_expresion_aritmetica(expNum, ts) :
     if isinstance(expNum, ExpresionBinaria) :
@@ -99,7 +103,7 @@ def procesar_instrucciones(instrucciones, ts) :
         elif isinstance(instr, Sasto):procesar_sasto(instr, ts)
         else : print('Error: instrucción no válida')
 
-f = open("./entrada.txt", "r")
+f = open("./entrada2.txt", "r")
 input = f.read()
 
 instrucciones = g.parse(input)

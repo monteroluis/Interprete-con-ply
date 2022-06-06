@@ -15,6 +15,9 @@ class OPERACION_COMPARATIVA(Enum):
     MENOR_QUE = 2
     IGUAL = 3
     DIFERENTE = 4
+    MAYOR_IGUAL_QUE = 5
+    MENOR_IGUAL_QUE = 6
+
 
 class OPERACION_LOGICA(Enum):
     AND = 1

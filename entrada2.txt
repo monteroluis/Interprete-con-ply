@@ -1,6 +1,5 @@
 numeric a;
 a~3;
-sasto:a<6;gdgdf into{
-write("ganando como siempre");
-a~a+1;
+sasto:a<~6; a~a+1 into{
+write("hola mundo");
 }

@@ -12,12 +12,14 @@ numeric c;
 c~1;
 #Se imprime un separador
 write("----------------");
+
 --->
  * Se imprimen las tablas del 1 al 5 y
  * para cada tabla, se imprimen los resultados
  * desde el uno hasta el 5, esto se hace con
  * dos ciclos while anidados.
  <---
+
 during:a<4+c{
 	a~a+1;
 	numeric b;
@@ -29,7 +31,7 @@ during:a<4+c{
 	write("----------------");
 }
 
-#Se asigna a la variable a el valor de 11
+#Se asigna a la variable a el valor de 12
 a~12;
 --->
   La variable b ya había sido declarada pero
